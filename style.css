@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    padding: 0 2vw;
+    background-image: url("images/main.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    color:aliceblue;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+}
+
+.static-div {
+    flex: 3;
+    text-align: center;
+    justify-content: center;
+}
+
+h1 {
+    font-family: "Calistoga", serif;
+    font-size: 30px;
+    border-bottom: 5px solid aliceblue;
+    border-radius: 25px;
+    width: 75%;
+    margin: 3vw auto;
+    letter-spacing: 0.05ch;
+}
+
+input, button {
+    font-family: "Poppins", sans-serif;
+}
+
+#city {
+    width: 35%;
+}
+
+.forecast-div {
+    flex: 2;
+    gap: 1vw;
+    font-family: "Poppins", sans-serif;
+}
+
+h2 {
+    font-family: "Calistoga", serif;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.daily {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    text-align: center;
+    justify-content: center;
+    gap: 1vh;
+}
+
+.city {
+    padding: 2vh 0;
+}
+
+.weather-type {
+    padding: 2vh 0;
+}
+
+.weekly {
+    flex: 1;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    padding-top: 2vw;
+}
+
+footer {
+    color: rgb(100, 100, 245);
+    background-color: aliceblue;
+    font-family: "Arvo", serif;
+    font-size: 16px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
