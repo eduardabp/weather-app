@@ -65,7 +65,7 @@ button {
     flex: 2;
     gap: 1vw;
     font-family: "Poppins", sans-serif;
-    visibility: hidden;
+    /*visibility: hidden;*/
 }
 
 h2 {
