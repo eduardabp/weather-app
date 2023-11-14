@@ -20,7 +20,7 @@ section {
 }
 
 .static-div {
-    flex: 3;
+    flex: 2;
     text-align: center;
     justify-content: center;
 }
@@ -43,6 +43,7 @@ form {
 
 input {
     height: 50%;
+    width: 40%;
 }
 
 button {
@@ -63,9 +64,9 @@ button {
 
 .forecast-div {
     flex: 2;
-    gap: 1vw;
     font-family: "Poppins", sans-serif;
-    /*visibility: hidden;*/
+    visibility: hidden;
+    align-items: center;
 }
 
 h2 {
@@ -85,20 +86,43 @@ h2 {
 
 .city {
     padding: 2vh 0;
+    font-size: 20px;
+}
+
+.temperature {
+    font-size: 40px;
+}
+
+.feels-like {
+    margin: -1vw 0 0 10vw;
 }
 
 .weather-type {
     padding: 2vh 0;
+    font-size: 20px;
+}
+
+.icon {
+    padding-right: 8px;
 }
 
 .weekly {
     flex: 1;
 }
 
-.row {
+.weekly-row {
     display: flex;
     flex-direction: row;
     padding-top: 2vw;
+    gap: 3vw;
+}
+
+.weekly-row div {
+    text-align: center;
+}
+
+.week-day {
+    padding-bottom: 5px;
 }
 
 footer {
