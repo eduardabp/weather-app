@@ -21,7 +21,13 @@ const getWeatherData = async (location) => {
 /* TODO: Await for both data */
 
 const getAllData = async () => {
+    const locationInput = document.getElementById("location-input");
+    const location = locationInput.value;
+    console.log(location)
 
+    const coordinates = await getGeoData(location);
+    const weatherData = await getWeatherData(coordinates);
+    return weatherData;
 }
 
 /* TODO: Display the information on DOM */
