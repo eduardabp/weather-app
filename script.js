@@ -12,7 +12,7 @@ const getGeoData = async (city) => {
 /* TODO: Get information from weather api */
 
 const getWeatherData = async (location) => {
-    const response = await fetch ("https://api.open-meteo.com/v1/forecast?latitude=" + location.latitude + "&longitude=" + location.longitude + "&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,cloud_cover,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_probability_max,wind_speed_10m_max&forecast_days=3");
+    const response = await fetch ("https://api.open-meteo.com/v1/forecast?latitude=" + location.latitude + "&longitude=" + location.longitude + "&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min");
     const data = await response.json();
     console.log(data)
     return data;
@@ -27,7 +27,7 @@ const getAllData = async () => {
 
     const coordinates = await getGeoData(location);
     const weatherData = await getWeatherData(coordinates);
-    const values = [location, weatherData];
+    const values = [coordinates, weatherData];
     return values;
 }
 
@@ -35,10 +35,10 @@ const getAllData = async () => {
 
 const displayWeatherData = async () => {
     const info = await getAllData();
-    const location = info[0];
+    const geo = info[0];
     const weatherInfo = info[1];
     const daily = document.querySelector(".daily");
-    console.log(location);
+    console.log(geo);
 
     const d = new Date();
     const dailyHeading = document.createElement("h2");
@@ -47,7 +47,7 @@ const displayWeatherData = async () => {
     daily.appendChild(dailyHeading);
 
     const city = document.createElement("p");
-    city.innerHTML = location;
+    city.innerHTML = geo.name + ", " + geo.country;
     city.classList.add("city");
     daily.appendChild(city);
 
@@ -59,26 +59,36 @@ const displayWeatherData = async () => {
     daily.appendChild(temperature);
 
     const sensation = document.createElement("p");
-    sensation.innerHTML = "feels like " + weatherInfo.current.apparent_temperature + weatherInfo.current_units.temperature_2m;
+    sensation.innerHTML = "feels like " + Math.round(weatherInfo.current.apparent_temperature) + weatherInfo.current_units.temperature_2m;
     sensation.classList.add("feels-like");
     daily.appendChild(sensation);
 
     const weatherType = document.createElement("p");
     const weatherTypeText = () => {
         let weatherCode = weatherInfo.current.weather_code;
-        if (weatherCode === 0) {
+        const main = document.querySelector("main");
+        if (weatherCode >= 0 && weatherCode < 3) {
+            main.style.backgroundImage = 'url("images/sunny.jpg")';
+            main.style.color = "aliceblue";
             return "Clear";
         }
-        else if (weatherCode > 0 && weatherCode < 50) {
+        else if (weatherCode > 2 && weatherCode < 56) {
+            main.style.backgroundImage = 'url("images/cloudy.jpg")';
+            main.style.color = "aliceblue";
             return "Cloudy";
         }
-        else if (weatherCode > 50 && weatherCode < 68 || weatherCode > 79 && weatherCode < 83) {
+        else if (weatherCode > 55 && weatherCode < 68 || weatherCode > 79 && weatherCode < 83) {
+            main.style.backgroundImage = 'url("images/rainy.jpg")';
+            main.style.color = "aliceblue";
             return "Rainy"
         }
         else if (weatherCode > 70 && weatherCode < 80 || weatherCode > 84 && weatherCode < 87) {
+            main.style.backgroundImage = 'url("images/snowy.jpg")';
             return "Snowy"
         }
         else if (weatherCode > 94) {
+            main.style.backgroundImage = 'url("images/stormy.jpg")';
+            main.style.color = "aliceblue";
             return "Stormy"
         }
     }
@@ -106,7 +116,56 @@ const displayWeatherData = async () => {
     wind.classList.add("wind");
     daily.appendChild(wind);
 
+    /* background */
+
     /* week */
+
+    let i = 0;
+    for (i=1; i<6; i++) {
+        const weekly = document.querySelector(".weekly-row");
+        const div = document.createElement("div");
+
+        const weekDate = document.createElement("p");
+        let objectDate = new Date();
+        let day = objectDate.getDate();
+        let month = objectDate.getMonth();
+        weekDate.innerHTML = day + i + "/" + month;
+        weekDate.classList.add("week-day");
+        div.appendChild(weekDate);
+
+        const image = document.createElement("img");
+        const weatherTypeWeek = () => {
+            let weatherCode = weatherInfo.daily.weather_code[i];
+            if (weatherCode >= 0 && weatherCode < 3) {
+                return "clear";
+            }
+            else if (weatherCode > 2 && weatherCode < 56) {
+                return "cloudy";
+            }
+            else if (weatherCode > 55 && weatherCode < 68 || weatherCode > 79 && weatherCode < 83) {
+                return "rainy"
+            }
+            else if (weatherCode > 70 && weatherCode < 80 || weatherCode > 84 && weatherCode < 87) {
+                return "snowy"
+            }
+            else if (weatherCode > 94) {
+                return "stormy"
+            }
+        }
+        image.src = "images/" + weatherTypeWeek() + ".png";
+        image.classList.add("week-weather-type");
+        div.appendChild(image);
+
+        const temperatureRange = document.createElement("p");
+        temperatureRange.innerHTML = Math.round(weatherInfo.daily.temperature_2m_max[i]) + weatherInfo.daily_units.temperature_2m_max + " / " + Math.round(weatherInfo.daily.temperature_2m_min[i]) + weatherInfo.daily_units.temperature_2m_min;
+        temperatureRange.classList.add("week-temperature");
+        div.appendChild(temperatureRange);
+
+        weekly.appendChild(div);
+    }
+
+    const forecast = document.querySelector(".forecast-div");
+    forecast.style.visibility = "visible";
 }
 
 /* TODO: Add event listeners */
