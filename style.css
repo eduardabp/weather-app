@@ -31,7 +31,7 @@ h1 {
     border-bottom: 5px solid rgb(4, 28, 49);
     border-radius: 25px;
     padding: 0 3vw;
-    margin: 3vw auto;
+    margin: 0 auto 3vw;
     letter-spacing: 0.05ch;
 }
 
