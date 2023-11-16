@@ -6,7 +6,6 @@ const getGeoData = async (city) => {
     const data = await response.json();
     console.log(data.results[0])
     return data.results[0];
-
 }
 
 /* TODO: Get information from weather api */
@@ -23,8 +22,7 @@ const getWeatherData = async (location) => {
 const getAllData = async () => {
     const locationInput = document.getElementById("location-input");
     const location = locationInput.value;
-    console.log(location)
-
+    
     const coordinates = await getGeoData(location);
     const weatherData = await getWeatherData(coordinates);
     const values = [coordinates, weatherData];
@@ -39,7 +37,6 @@ const displayWeatherData = async () => {
     const weatherInfo = info[1];
     const daily = document.querySelector(".daily");
     daily.innerHTML = "";
-    console.log(geo);
 
     const d = new Date();
     const dailyHeading = document.createElement("h2");
@@ -89,7 +86,6 @@ const displayWeatherData = async () => {
         let weatherCode = weatherInfo.current.weather_code;
         const main = document.querySelector("main");
         const forecastDiv = document.querySelector(".forecast-div");
-        const forecastWeek = document.querySelector(".weekly");
         if (weatherCode >= 0 && weatherCode < 3) {
             main.style.backgroundImage = 'url("images/sunny.jpg")';
             main.style.color = "rgb(4, 28, 49)";
@@ -123,8 +119,6 @@ const displayWeatherData = async () => {
     weatherType.classList.add("weather-type");
     daily.insertBefore(weatherType, umidity);
 
-    /* background */
-
     /* week */
 
     let i = 0;
@@ -136,9 +130,10 @@ const displayWeatherData = async () => {
 
         const weekDate = document.createElement("p");
         let objectDate = new Date();
-        let day = objectDate.getDate();
+        let day = new Date(objectDate);
+        day.setDate(objectDate.getDate() + i);
         let month = objectDate.getMonth();
-        weekDate.innerHTML = day + i + "/" + month;
+        weekDate.innerHTML = day.toDateString().slice(0, 3);
         weekDate.classList.add("week-day");
         div.appendChild(weekDate);
 
@@ -161,7 +156,12 @@ const displayWeatherData = async () => {
                 return "stormy"
             }
         }
-        image.src = "images/" + weatherTypeWeek() + ".png";
+        if(weatherType.innerHTML === "Snowy") {
+            image.src = "images/" + weatherTypeWeek() + "2.png";
+        }
+        else {
+            image.src = "images/" + weatherTypeWeek() + ".png";
+        }
         image.classList.add("week-weather-type");
         div.appendChild(image);
 
