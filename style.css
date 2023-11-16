@@ -58,6 +58,12 @@ button {
     height: 75%;
 }
 
+button:hover {
+    background-color: aliceblue;
+    color: rgb(4, 28, 49);
+    border-color: aliceblue;
+}
+
 #city {
     width: 35%;
 }
@@ -145,7 +151,7 @@ footer {
         flex-direction: column;
     }
     footer {
-        font-size: 12px;
+        font-size: 10px;
     }
     .forecast-div {
         padding-bottom: 30px;

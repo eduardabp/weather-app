@@ -22,7 +22,7 @@ const getWeatherData = async (location) => {
 const getAllData = async () => {
     const locationInput = document.getElementById("location-input");
     const location = locationInput.value;
-    
+
     const coordinates = await getGeoData(location);
     const weatherData = await getWeatherData(coordinates);
     const values = [coordinates, weatherData];
@@ -184,3 +184,10 @@ formInput.addEventListener("submit", (e) => {
 	e.preventDefault();
 	displayWeatherData();
 })
+const button = document.querySelector("button");
+button.addEventListener("click", function () {
+    this.style.transform = "scale(0.8)";
+    setTimeout(()=>{
+       this.style.transform = "scale(1)";
+    },200)
+  });
