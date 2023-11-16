@@ -30,7 +30,7 @@ h1 {
     font-size: 30px;
     border-bottom: 5px solid rgb(4, 28, 49);
     border-radius: 25px;
-    width: 75%;
+    padding: 0 3vw;
     margin: 3vw auto;
     letter-spacing: 0.05ch;
 }
@@ -113,7 +113,7 @@ h2 {
 .weekly-row {
     display: flex;
     flex-direction: row;
-    padding-top: 2vw;
+    padding-top: 1vw;
     gap: 3vw;
 }
 
