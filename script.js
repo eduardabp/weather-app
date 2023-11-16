@@ -61,19 +61,21 @@ const displayWeatherData = async () => {
     sensation.classList.add("feels-like");
     daily.appendChild(sensation);
 
-    const umidity = document.createElement("p");
-    const umidityIcon = document.createElement("img");
-    umidityIcon.src = "images/humidity.png"
-    umidityIcon.classList.add("icon");
-    const umidityText = document.createTextNode(weatherInfo.current.relative_humidity_2m + "%");
-    umidity.appendChild(umidityIcon);
-    umidity.appendChild(umidityText);
-    umidity.classList.add("umidity");
-    daily.appendChild(umidity);
+    const humidity = document.createElement("p");
+    const humidityIcon = document.createElement("img");
+    humidityIcon.src = "images/humidity.png";
+    humidityIcon.alt = "a drop of water with percentage sign inside it";
+    humidityIcon.classList.add("icon");
+    const humidityText = document.createTextNode(weatherInfo.current.relative_humidity_2m + "%");
+    humidity.appendChild(humidityIcon);
+    humidity.appendChild(humidityText);
+    humidity.classList.add("humidity");
+    daily.appendChild(humidity);
 
     const wind = document.createElement("p");
     const windIcon = document.createElement("img");
     windIcon.src = "images/wind.png"
+    windIcon.alt = "three stream lines indicating wind";
     windIcon.classList.add("icon");
     const windText = document.createTextNode(weatherInfo.current.wind_speed_10m + " Km/h");
     wind.appendChild(windIcon);
@@ -105,7 +107,7 @@ const displayWeatherData = async () => {
         else if (weatherCode > 70 && weatherCode < 80 || weatherCode > 84 && weatherCode < 87) {
             main.style.backgroundImage = 'url("images/snowy.jpg")';
             main.style.color = "rgb(4, 28, 49)";
-            umidityIcon.src = "images/humidity2.png";
+            humidityIcon.src = "images/humidity2.png";
             windIcon.src = "images/wind2.png";
             return "Snowy"
         }
@@ -117,7 +119,7 @@ const displayWeatherData = async () => {
     }
     weatherType.innerHTML = weatherTypeText();
     weatherType.classList.add("weather-type");
-    daily.insertBefore(weatherType, umidity);
+    daily.insertBefore(weatherType, humidity);
 
     /* week */
 
@@ -158,9 +160,11 @@ const displayWeatherData = async () => {
         }
         if(weatherType.innerHTML === "Snowy") {
             image.src = "images/" + weatherTypeWeek() + "2.png";
+            image.alt = "icon denoting that the day will be " + weatherTypeWeek();
         }
         else {
             image.src = "images/" + weatherTypeWeek() + ".png";
+            image.alt = "icon denoting that the day will be " + weatherTypeWeek();
         }
         image.classList.add("week-weather-type");
         div.appendChild(image);
