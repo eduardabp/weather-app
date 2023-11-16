@@ -38,6 +38,7 @@ const displayWeatherData = async () => {
     const geo = info[0];
     const weatherInfo = info[1];
     const daily = document.querySelector(".daily");
+    daily.innerHTML = "";
     console.log(geo);
 
     const d = new Date();
@@ -63,39 +64,6 @@ const displayWeatherData = async () => {
     sensation.classList.add("feels-like");
     daily.appendChild(sensation);
 
-    const weatherType = document.createElement("p");
-    const weatherTypeText = () => {
-        let weatherCode = weatherInfo.current.weather_code;
-        const main = document.querySelector("main");
-        if (weatherCode >= 0 && weatherCode < 3) {
-            main.style.backgroundImage = 'url("images/sunny.jpg")';
-            main.style.color = "aliceblue";
-            return "Clear";
-        }
-        else if (weatherCode > 2 && weatherCode < 56) {
-            main.style.backgroundImage = 'url("images/cloudy.jpg")';
-            main.style.color = "aliceblue";
-            return "Cloudy";
-        }
-        else if (weatherCode > 55 && weatherCode < 68 || weatherCode > 79 && weatherCode < 83) {
-            main.style.backgroundImage = 'url("images/rainy.jpg")';
-            main.style.color = "aliceblue";
-            return "Rainy"
-        }
-        else if (weatherCode > 70 && weatherCode < 80 || weatherCode > 84 && weatherCode < 87) {
-            main.style.backgroundImage = 'url("images/snowy.jpg")';
-            return "Snowy"
-        }
-        else if (weatherCode > 94) {
-            main.style.backgroundImage = 'url("images/stormy.jpg")';
-            main.style.color = "aliceblue";
-            return "Stormy"
-        }
-    }
-    weatherType.innerHTML = weatherTypeText();
-    weatherType.classList.add("weather-type");
-    daily.appendChild(weatherType);
-
     const umidity = document.createElement("p");
     const umidityIcon = document.createElement("img");
     umidityIcon.src = "images/humidity.png"
@@ -116,11 +84,52 @@ const displayWeatherData = async () => {
     wind.classList.add("wind");
     daily.appendChild(wind);
 
+    const weatherType = document.createElement("p");
+    const weatherTypeText = () => {
+        let weatherCode = weatherInfo.current.weather_code;
+        const main = document.querySelector("main");
+        const forecastDiv = document.querySelector(".forecast-div");
+        const forecastWeek = document.querySelector(".weekly");
+        if (weatherCode >= 0 && weatherCode < 3) {
+            main.style.backgroundImage = 'url("images/sunny.jpg")';
+            main.style.color = "rgb(4, 28, 49)";
+            forecastDiv.style.color = "aliceblue";
+            return "Clear";
+        }
+        else if (weatherCode > 2 && weatherCode < 56) {
+            main.style.backgroundImage = 'url("images/cloudy.jpg")';
+            main.style.color = "aliceblue";
+            return "Cloudy";
+        }
+        else if (weatherCode > 55 && weatherCode < 68 || weatherCode > 79 && weatherCode < 83) {
+            main.style.backgroundImage = 'url("images/rainy.jpg")';
+            main.style.color = "aliceblue";
+            return "Rainy"
+        }
+        else if (weatherCode > 70 && weatherCode < 80 || weatherCode > 84 && weatherCode < 87) {
+            main.style.backgroundImage = 'url("images/snowy.jpg")';
+            main.style.color = "rgb(4, 28, 49)";
+            umidityIcon.src = "images/humidity2.png";
+            windIcon.src = "images/wind2.png";
+            return "Snowy"
+        }
+        else if (weatherCode > 94) {
+            main.style.backgroundImage = 'url("images/stormy.jpg")';
+            main.style.color = "aliceblue";
+            return "Stormy"
+        }
+    }
+    weatherType.innerHTML = weatherTypeText();
+    weatherType.classList.add("weather-type");
+    daily.insertBefore(weatherType, umidity);
+
     /* background */
 
     /* week */
 
     let i = 0;
+    const weekly = document.querySelector(".weekly-row");
+    weekly.innerHTML = "";
     for (i=1; i<6; i++) {
         const weekly = document.querySelector(".weekly-row");
         const div = document.createElement("div");
