@@ -37,7 +37,7 @@ const displayWeatherData = async () => {
 
     const d = new Date();
     const dailyHeading = document.createElement("h2");
-    dailyHeading.innerHTML = d.toDateString();
+    dailyHeading.innerHTML = d.toDateString().slice(3, 10);
     dailyHeading.classList.add("date");
     daily.appendChild(dailyHeading);
 
